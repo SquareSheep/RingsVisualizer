@@ -22,12 +22,8 @@ class IColor extends AColor {
   IColor() {
     super(0,0,0,0);
     this.rm = 0; this.gm = 0; this.bm = 0; this.am = 0;
-    this.rc = 0; this.gc = 0; this.bc = 0; this.ac = 0;
+    this.rc = 125; this.gc = 125; this.bc = 125; this.ac = 125;
     this.index = 0;
-  }
-
-  void blacken() {
-    rm = 0; gm = 0; bm = 0; am = 0; rc = 0; gc = 0; bc = 0; ac = 0;
   }
 
   void update() {

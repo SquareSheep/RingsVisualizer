@@ -9,17 +9,17 @@ void calcFFT() {
       temp += fft.getBand(k);
     }
     temp /= av.length / (i + 1);
-    temp = pow(temp,1.8);
+    temp = pow(temp,1.4);
     avg += temp;
     av[i] = temp;
   }
   avg /= av.length;
 
   for (int i = 0 ; i < av.length ; i ++) {
-    if (av[i] < avg*1.5) {
+    if (av[i] < avg*1.2) {
       av[i] /= 2;
     } else {
-      av[i] += (av[i] - avg * 1.5) /2;
+      av[i] += (av[i] - avg * 1.2) /2;
     }
     if (av[i] > max) max = av[i];
   }
@@ -133,4 +133,12 @@ void drawWidthBox(float w) {
   text("1,-1,-1",0,0);
   pop();
   pop();
+}
+
+PVector[] copyPVectorArray(PVector[] array) {
+	PVector[] p = new PVector[array.length];
+	for (int i = 0 ; i < array.length ; i ++) {
+		p[i] = array[i].copy();
+	}
+	return p;
 }
