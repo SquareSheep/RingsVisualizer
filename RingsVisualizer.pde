@@ -1,6 +1,4 @@
 static float bpm = 106;
-static float mspb = 1;
-static float framesPerBeat = 1;
 static float cos60 = cos(PI/3);
 static float sin60 = sin(PI/3);
 
@@ -40,7 +38,7 @@ int currBeat;
 void setup() {
   frameRate(60);
   //fullScreen(P3D);
-  size(800, 800,P3D);
+  size(500,500,P3D);
 
   de = (int)(min(width,height)*1);
   aw = (int)(4*de);
@@ -66,22 +64,15 @@ void setup() {
 
   timer = new BeatTimer(50,0,bpm);
 
-  createBasicRing(new PVector(0,0,0), de*0.75, de*0.18,25);
-  createBasicRing(new PVector(0,0,0), de*0.65, de*0.16,25);
-  createBasicRing(new PVector(0,0,0), de*0.55, de*0.14,25);
-  createBasicRing(new PVector(0,0,0), de*0.45, de*0.12,25);
-  // createPanelRing(new PVector(0,0,0), de*0.5, de*0.1, new PVector[]{
-  // 	new PVector(0,1,0), new PVector(1,0,0), new PVector(-1,-1,0)}, 10);
-  // createPanelRing(new PVector(0,0,0), de*0.5, de*0.1, new PVector[]{
-  // 	new PVector(1,1,0), new PVector(1,0,0), new PVector(-1,-1,0)}, 10);
-  rings.get(0).av.P.set(0,0.02,0.1);
+  createBasicRing(new PVector(0,0,0), de*0.85, de*0.01,144);
+  createBasicRing(new PVector(0,0,0), de*0.65, de*0.09,16);
+  createBasicRing(new PVector(0,0,0), de*0.6, de*0.05,14);
+  rings.get(0).av.P.set(0,0.01,0.04);
   rings.get(0).ang.P.x = PI*0.65;
-  rings.get(1).av.P.set(0,0.007,0.05);
-  rings.get(1).ang.P.x = -PI*0.8;
-  rings.get(2).av.P.set(0,-0.002,-0.15);
-  rings.get(2).ang.P.x = PI;
-  rings.get(3).av.P.set(0,-0.01,0.07);
-  rings.get(3).ang.P.x = -PI*1.6;
+  rings.get(1).av.P.set(0,-0.007,0.03);
+  rings.get(1).ang.P.x = PI*1.35;
+  rings.get(2).av.P.set(0,0.004,0.035);
+  rings.get(2).ang.P.x = PI*1.1;
 }
 
 void draw() {

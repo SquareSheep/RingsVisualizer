@@ -134,11 +134,3 @@ void drawWidthBox(float w) {
   pop();
   pop();
 }
-
-PVector[] copyPVectorArray(PVector[] array) {
-	PVector[] p = new PVector[array.length];
-	for (int i = 0 ; i < array.length ; i ++) {
-		p[i] = array[i].copy();
-	}
-	return p;
-}

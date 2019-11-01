@@ -12,18 +12,19 @@ class IColor extends AColor {
   int gup = 1;
   int bup = 1;
 
-  IColor(PVector r, PVector g, PVector b, PVector a, int index) {
-    super(r.x, g.x, b.x, a.x);
-    this.rm = r.y; this.gm = g.y; this.bm = b.y; this.am = a.y;
-    this.rc = (int)r.z; this.gc = (int)g.z; this.bc = (int)b.z; this.ac = (int)a.z;
-    this.index = index;
+  IColor(float rm, float gm, float bm, float am, float rc, float gc, float bc, float ac, float index) {
+  	super(rc, gc, bc, ac);
+  	this.rm = rm; this.gm = gm; this.bm = bm; this.am = am;
+  	this.rc = (int)rc; this.gc = (int)gc; this.bc = (int)bc; this.ac = (int)ac;
+  	this.index = (int)index;
+  }
+
+  IColor(float rc, float gc, float bc, float ac) {
+  	this(0,0,0,0, rc,gc,bc,ac, 0);
   }
 
   IColor() {
-    super(0,0,0,0);
-    this.rm = 0; this.gm = 0; this.bm = 0; this.am = 0;
-    this.rc = 125; this.gc = 125; this.bc = 125; this.ac = 125;
-    this.index = 0;
+    this(0,0,0,0, 0,0,0,0, 0);
   }
 
   void update() {
@@ -65,10 +66,7 @@ class AColor {
   }
 
   AColor(float R, float G, float B, float A) {
-    this.r = new SpringValue(R, defaultVMult, defaultMass);
-    this.g = new SpringValue(G, defaultVMult, defaultMass);
-    this.b = new SpringValue(B, defaultVMult, defaultMass);
-    this.a = new SpringValue(A, defaultVMult, defaultMass);
+    this(R, G, B, A, defaultVMult, defaultMass);
   }
 
   AColor copy() {
@@ -146,13 +144,6 @@ class Point {
   float vMult;
   float mass;
 
-  Point() {
-    this.p = new PVector(0,0,0);
-    this.P = new PVector(0,0,0);
-    this.vMult = defaultVMult;
-    this.mass = defaultMass;
-  }
-
   Point(PVector p, float vMult, float mass) {
     this.p = p;
     this.P = p.copy();
@@ -160,25 +151,20 @@ class Point {
     this.mass = mass;
   }
 
+  Point() {
+    this(new PVector(0,0,0), defaultVMult, defaultMass);
+  }
+
   Point(PVector p) {
-    this.p = p;
-    this.P = p.copy();
-    this.vMult = defaultVMult;
-    this.mass = defaultMass;
+    this(p, defaultVMult, defaultMass);
   }
 
   Point(float x, float y, float z) {
-    this.p = new PVector(x, y, z);
-    this.P = p.copy();
-    this.vMult = defaultVMult;
-    this.mass = defaultMass;
+    this(new PVector(x, y, z), defaultVMult, defaultMass);
   }
 
   Point(float x, float y, float z, float vMult, float mass) {
-    this.p = new PVector(x, y, z);
-    this.P = p.copy();
-    this.vMult = vMult;
-    this.mass = mass;
+    this(new PVector(x, y, z), vMult, mass);
   }
 
   void update() {
@@ -193,45 +179,6 @@ class Point {
 
   Point copy() {
     return new Point(p.copy(), vMult, mass);
-  }
-}
-
-class APoint {
-  PVector p;
-  PVector v = new PVector(0,0,0);
-  PVector a = new PVector(0,0,0);
-  float mass;
-  float vMult;
-
-  APoint(PVector p, float vMult, float mass) {
-    this.p = p;
-    this.mass = mass;
-    this.vMult = vMult;
-  }
-
-  APoint(PVector p) {
-    this.p = p;
-    this.mass = defaultMass;
-    this.vMult = defaultVMult;
-  }
-
-  void updateVectors() {
-    v.add(a);
-    v.mult(vMult);
-    p.add(v);
-    a.mult(0);
-  }
-
-  void update() {
-    updateVectors();
-  }
-
-  void applyForce(PVector f) {
-    a.add(f.div(mass));
-  }
-
-  APoint copy() {
-    return new APoint(p.copy(), vMult, mass);
   }
 }
 
@@ -250,10 +197,7 @@ class SpringValue {
   }
 
   SpringValue(float x) {
-    this.x = x;
-    this.X = x;
-    vMult = defaultVMult;
-    mass = defaultMass;
+    this(x, defaultVMult, defaultMass);
   }
 
   void update() {
