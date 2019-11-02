@@ -1,4 +1,4 @@
-static float bpm = 106;
+static float bpm = 145;
 static float cos60 = cos(PI/3);
 static float sin60 = sin(PI/3);
 
@@ -64,18 +64,46 @@ void setup() {
 
   timer = new BeatTimer(50,0,bpm);
 
-  createBasicRing(new PVector(0,0,0), de*0.85, de*0.01,144);
-  createBasicRing(new PVector(0,0,0), de*0.65, de*0.09,16);
-  createBasicRing(new PVector(0,0,0), de*0.6, de*0.05,14);
-  rings.get(0).av.P.set(0,0.01,0.04);
-  rings.get(0).ang.P.x = PI*0.65;
-  rings.get(1).av.P.set(0,-0.007,0.03);
-  rings.get(1).ang.P.x = PI*1.35;
-  rings.get(2).av.P.set(0,0.004,0.035);
-  rings.get(2).ang.P.x = PI*1.1;
+  float d = front.z - back.z+aw;
+  createBasicRing(new PVector(0,0,front.z - d*0.1), de*0.6, de*0.05,22, 16,0,0);
+  createBasicRing(new PVector(0,0,front.z - d*0.25), de*0.65, de*0.05,27, 0,16,5);
+  createBasicRing(new PVector(0,0,front.z - d*0.45), de*0.7, de*0.07,32, 18,5,25);
+  createBasicRing(new PVector(0,0,front.z - d*0.6), de*0.65, de*0.06,20, 5,5,17);
+  createBasicRing(new PVector(0,0,front.z - d*0.75), de*0.75, de*0.07,24, 5,20,5);
+  createBasicRing(new PVector(0,0,front.z - d), de*0.65, de*0.06,14, 25,5,5);
+  rings.get(0).av.P.set(0,0.02,0.04);
+  rings.get(0).ang.P.x = 0.2;
+  rings.get(1).av.P.set(0,-0.014,0.03);
+  rings.get(1).ang.P.x = 0.5;
+  rings.get(2).av.P.set(0,0.024,0.035);
+  rings.get(2).ang.P.x = 0.9;
+  rings.get(3).av.P.set(0,0.016,0.04);
+  rings.get(3).ang.P.x = 1.1;
+  rings.get(4).av.P.set(0,-0.017,0.03);
+  rings.get(4).ang.P.x = 0.2;
+  rings.get(5).av.P.set(0,0.012,0.035);
+  rings.get(5).ang.P.x = 2;
 }
 
 void draw() {
+  cam.ang.P.x += sin((float)frameCount/100 + PI/2)/500;
+  for (int i = 0 ; i < rings.size() ; i ++) {
+    Ring ring = rings.get(i);
+    ring.p.P.z += de*0.015;
+    if (ring.p.p.z > front.z + aw) {
+      ring.p.P.z = back.z;
+      ring.p.p.z = back.z;
+      ring.sca.x = 0;
+    }
+  }
+
+  for (Ring ring : rings) {
+    for (int i = 0 ; i < ring.parts.size() ; i ++) {
+      Poly part = (Poly) ring.parts.get(i);
+      part.points[4].v.y -= av[part.fillStyle[0].index]*part.w*0.03;
+    }
+  }
+
   update();
 
   cam.render();

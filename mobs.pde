@@ -5,12 +5,12 @@ Rings:
 
 Create all Rings from Ring, no subclasses
 */
-void createBasicRing(PVector p, float w, float w2, int num) {
+void createBasicRing(PVector p, float w, float w2, int num, float rm, float gm, float bm) {
 	Ring ring = new Ring(p);
 	for (int i = 0 ; i < num ; i ++) {
-		Poly box = newBox(new PVector(0,w,0), w2);
-		box.setC(0,0,0,255);
-		box.setM(5,0,0,0);
+		Poly box = newPyramid(new PVector(0,w,0), w2);
+		box.setC(25,25,25,125);
+		box.setM(rm, gm, bm,5);
 		for (int k = 0 ; k < box.fillStyle.length ; k ++) {
 			box.fillStyle[k].index = (int)((float)i/num*binCount);
 		}
@@ -98,6 +98,7 @@ abstract class MobF extends Mob {
 		rotateX(ang.p.x);
 		rotateY(ang.p.y);
 		rotateZ(ang.p.z);
+		scale(sca.x);
 	}
 }
 
@@ -105,7 +106,7 @@ abstract class Mob {
 	boolean finished = false;
 	boolean draw = true;
 	Point p;
-	SpringValue sca = new SpringValue(1);
+	SpringValue sca = new SpringValue(1, 0.5, 10);
 	Point ang = new Point();
 	
 	void updatePoints() {
@@ -120,6 +121,7 @@ abstract class Mob {
 		rotateX(ang.p.x);
 		rotateY(ang.p.y);
 		rotateZ(ang.p.z);
+		scale(sca.x);
 	}
 
 	void update() {
