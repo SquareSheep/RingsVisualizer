@@ -1,13 +1,11 @@
-Poly newPyramid(PVector p, float w) {
-	return new Poly(p, w, new PVector(0,0,0), new float[]{-1,0,-1, -1,0,1, 1,0,1, 1,0,-1, 0,-2,0}, new int[][]{
+Poly newPoly(String type, PVector p, float w) {
+	if (type == "Pyramid") return new Poly(p, w, new PVector(0,0,0), new float[]{-1,0,-1, -1,0,1, 1,0,1, 1,0,-1, 0,-2,0}, new int[][]{
 		new int[]{0,1,2,3}, new int[]{0,1,4}, new int[]{1,2,4}, new int[]{2,3,4}, new int[]{3,0,4}
 	});
-}
-
-Poly newBox(PVector p, float w) {
-	return new Poly(p, w, new PVector(0,0,0), new float[]{-1,-1,-1, -1,-1,1, -1,1,1, -1,1,-1, 1,-1,-1, 1,-1,1, 1,1,1, 1,1,-1}, new int[][]{
+	if (type == "Box") return new Poly(p, w, new PVector(0,0,0), new float[]{-1,-1,-1, -1,-1,1, -1,1,1, -1,1,-1, 1,-1,-1, 1,-1,1, 1,1,1, 1,1,-1}, new int[][]{
 		new int[]{0,1,2,3}, new int[]{0,1,5,4}, new int[]{1,2,6,5}, new int[]{2,3,7,6}, new int[]{0,3,7,4}, new int[]{4,5,6,7}
 	});
+	return new Poly();
 }
 
 class Poly extends Mob {
@@ -15,6 +13,8 @@ class Poly extends Mob {
 	Point[] points;
 	IColor[] fillStyle;
 	int[][] faces;
+
+	Poly() {}
 
 	Poly(PVector p, float w, PVector ang, float[] vertices, int[][] faces) {
 		this.p = new Point(p);

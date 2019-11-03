@@ -1,14 +1,8 @@
-/*
-Rings:
-- All parts face towards center
-- All parts have angZ relative to center in addition to normal ang
-
-Create all Rings from Ring, no subclasses
-*/
-void createBasicRing(PVector p, float w, float w2, int num, float rm, float gm, float bm) {
+void createBasicRing(String type, PVector p, float w, float w2, int num, float rm, float gm, float bm) {
 	Ring ring = new Ring(p);
 	for (int i = 0 ; i < num ; i ++) {
-		Poly box = newPyramid(new PVector(0,w,0), w2);
+		Poly box = newPoly(type, new PVector(0,w,0), w2);
+		box.p = new Point(0,w,0);
 		box.setC(25,25,25,125);
 		box.setM(rm, gm, bm,5);
 		for (int k = 0 ; k < box.fillStyle.length ; k ++) {
